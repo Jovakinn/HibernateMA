@@ -17,11 +17,13 @@ public class HibernateFactory {
         if (sessionFactory == null){
             Configuration configuration = new Configuration();
 
-            configuration.setProperty("hibernate.connection.driverClassName", "org.postgresql.Driver");
-            configuration.setProperty("hibernate.connection.url", "jdbc:postgresql://localhost:5432/store_ma");
-            configuration.setProperty("hibernate.connection.username", "postgres");
-            configuration.setProperty("hibernate.connection.password", "Max05012004");
-            configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
+            configuration.setProperty("hibernate.connection.driverClassName", "com.mysql.jdbc.Driver");
+            configuration.setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/");
+
+            configuration.setProperty("hibernate.connection.username", "");
+            configuration.setProperty("hibernate.connection.password", "");
+
+            configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
             configuration.setProperty("hibernate.show_sql", "true");
             configuration.setProperty("hibernate.format_sql", "true");
             configuration.setProperty("hibernate.hbm2ddl.auto", "update");
