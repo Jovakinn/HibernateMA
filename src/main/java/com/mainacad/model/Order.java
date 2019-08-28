@@ -5,20 +5,34 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.*;
+
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+
+@Entity
+@Table(name = "orders")
 public class Order {
 
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Integer itemId;
-    private Integer amount;
-    private Integer cartId;
 
-    public Order(Integer itemId, Integer amount, Integer cartId) {
-        this.itemId = itemId;
+    @ManyToOne(targetEntity = Item.class)
+    private Item item;
+
+    @Column(name = "amount")
+    private Integer amount;
+
+    @ManyToOne(targetEntity = Cart.class)
+    private Cart cart;
+
+    public Order(Item item, Integer amount, Cart cart) {
+        this.item = item;
         this.amount = amount;
-        this.cartId = cartId;
+        this.cart = cart;
     }
 }

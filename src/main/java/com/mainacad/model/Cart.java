@@ -5,20 +5,34 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.*;
+
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+
+@Entity
+@Table(name = "carts")
 public class Cart {
 
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Long creationTime;
-    private Boolean closed;
-    private Integer userId;
 
-    public Cart(Long creationTime, Boolean closed, Integer userId) {
+    @Column(name = "creation_time")
+    private Long creationTime;
+
+    @Column(name = "closed")
+    private Boolean closed;
+
+    @ManyToOne(targetEntity = User.class)
+    private User user;
+
+    public Cart(Long creationTime, Boolean closed, User user) {
         this.creationTime = creationTime;
         this.closed = closed;
-        this.userId = userId;
+        this.user = user;
     }
 }
