@@ -3,6 +3,7 @@ package com.mainacad.dao;
 import com.mainacad.model.Order;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.NativeQuery;
 
 import java.util.List;
 
@@ -57,7 +58,10 @@ public class OrderDAO {
         session.getTransaction().begin();
         String sql = "SELECT * FROM orders WHERE cart_id=?";
 
-        List<Order> orders = session.createNativeQuery(sql, Order.class).getResultList();
+        NativeQuery quary = session.createNativeQuery(sql, Order.class);
+        quary.setParameter(1, cartId);
+
+        List<Order> orders = quary.getResultList();
 
         session.getTransaction().commit();
         session.close();
@@ -91,7 +95,12 @@ public class OrderDAO {
                 "c.creation_time<=? " +
                 "ORDER BY c.creation_time";
 
-        List<Order> orders = session.createNativeQuery(sql, Order.class).getResultList();
+        NativeQuery quary = session.createNativeQuery(sql, Order.class);
+        quary.setParameter(1, userId);
+        quary.setParameter(2, from);
+        quary.setParameter(3, to);
+
+        List<Order> orders = quary.getResultList();
 
         session.getTransaction().commit();
         session.close();

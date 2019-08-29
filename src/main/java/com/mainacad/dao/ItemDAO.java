@@ -3,6 +3,7 @@ package com.mainacad.dao;
 import com.mainacad.model.Item;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.NativeQuery;
 
 import java.util.List;
 
@@ -100,7 +101,12 @@ public class ItemDAO {
                 "c.creation_time<1564088500000 AND " +
                 "c.closed=true";
 
-        List<Item> items = session.createNativeQuery(sql, Item.class).getResultList();
+        NativeQuery query = session.createNativeQuery(sql, Item.class);
+        query.setParameter(1, userId);
+        query.setParameter(2, from);
+        query.setParameter(3, to);
+
+        List<Item> items = query.getResultList();
 
         session.getTransaction().commit();
         session.close();
