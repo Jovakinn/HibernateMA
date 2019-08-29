@@ -16,6 +16,8 @@ import javax.persistence.*;
 @Table(name = "carts")
 public class Cart {
 
+    private static final long serialVersionUID = 1L;
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
