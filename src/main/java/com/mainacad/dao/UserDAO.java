@@ -49,6 +49,20 @@ public class UserDAO {
         return user;
     }
 
+    public static User findOneByLogin(String login){
+        SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
+        Session session = sessionFactory.openSession();
+
+        session.getTransaction().begin();
+        User user = session.find(User.class, login);
+
+        session.getTransaction().commit();
+        session.close();
+
+        return user;
+    }
+
+
     public static List<User> findAll(){
         SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
         Session session = sessionFactory.openSession();
