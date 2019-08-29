@@ -67,7 +67,7 @@ public class CartDAO {
         return carts;
     }
 
-    public static Cart findOpenCartByUser(Integer userId){
+    public static List<Cart> findOpenCartByUser(Integer userId){
         SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
         Session session = sessionFactory.openSession();
 
@@ -77,12 +77,12 @@ public class CartDAO {
         NativeQuery quary = session.createNativeQuery(sql, Cart.class);
         quary.setParameter(1, userId);
 
-        Cart cart = (Cart) quary.getResultList();
+        List<Cart> carts = quary.getResultList();
 
         session.getTransaction().commit();
         session.close();
 
-        return cart;
+        return carts;
     }
 
     public static Cart close(Integer cartId){

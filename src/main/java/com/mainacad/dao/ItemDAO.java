@@ -63,17 +63,17 @@ public class ItemDAO {
         return items;
     }
 
-    public static Item findOneByItemCode(String itemCode){
+    public static List<Item> findOneByItemCode(String itemCode){
         SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
         Session session = sessionFactory.openSession();
 
         session.getTransaction().begin();
-        Item item = session.find(Item.class, itemCode);
+        Item items = session.find(Item.class, itemCode);
 
         session.getTransaction().commit();
         session.close();
 
-        return item;
+        return (List<Item>) items;
     }
 
     public static void delete(Item item){
