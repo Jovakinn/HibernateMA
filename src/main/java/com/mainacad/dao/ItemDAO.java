@@ -63,17 +63,22 @@ public class ItemDAO {
         return items;
     }
 
-    public static List<Item> findOneByItemCode(String itemCode){
+    public static List<Item> findByItemCode(String itemCode){
         SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
         Session session = sessionFactory.openSession();
 
         session.getTransaction().begin();
-        Item items = session.find(Item.class, itemCode);
+        String sql = "SELECT * FROM items WHERE item_code=?";
+
+        NativeQuery query = session.createNativeQuery(sql, Item.class);
+        query.setParameter(1,itemCode);
+
+        List<Item> items = query.getResultList();
 
         session.getTransaction().commit();
         session.close();
 
-        return (List<Item>) items;
+        return items;
     }
 
     public static void delete(Item item){
