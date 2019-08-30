@@ -12,31 +12,34 @@ class CartDAOTest {
 
     @Test
     void testSaveAndFindOneAndDelete() {
-        User user = new User();
-        Cart cart = new Cart( 1l, false, user);
+        User user = new User("Jovvakinn","12345", "Max", "Khodakov");
+        UserDAO.save(user);
 
+        Cart cart = new Cart( 1l, false, user);
         Cart savedCart = CartDAO.save(cart);
+
         assertNotNull(savedCart);
         assertNotNull(savedCart.getId());
 
         Cart dbCart = CartDAO.findOneById(savedCart.getId());
         assertNotNull(dbCart);
 
-        CartDAO.close(cart.getId());
+        CartDAO.close(savedCart.getId());
 
         dbCart = CartDAO.findOneById(savedCart.getId());
         assertNull(dbCart);
     }
 
     @Test
-    void testFindByLoginAndPassword() {
-        User user = new User();
-        Cart cart = new Cart( 1l, false, user);
+    void testFindByCartAndUser() {
+        User user = new User("Jovvakinn","12345", "Max", "Khodakov");
+        UserDAO.save(user);
 
+        Cart cart = new Cart( 1l, false, user);
         Cart savedCart = CartDAO.save(cart);
 
         List<Cart> carts = CartDAO.findOpenCartByUser(user.getId());
-        assertTrue(carts.isEmpty());
+        assertNotNull(carts.isEmpty());
 
         CartDAO.close(savedCart.getId());
     }
